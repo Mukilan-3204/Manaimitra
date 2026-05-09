@@ -10,18 +10,24 @@ router = APIRouter(prefix="/api", tags=["plots"])
 
 
 class PlotCreate(BaseModel):
+    # Public — visible to buyers
     title: str
     description: str
     area_sqft: float
     price: float
-    address: str
     division: str
     place: str
     place_id: int
     type: str = "Residential Plot"
+    land_photos: List[str] = []
+
+    # Private — visible to owner only
     seller_name: str
     seller_phone: str
-    images: List[str] = []
+    seller_address: str = ""
+    patta_number: str = ""
+    survey_number: str = ""
+    doc_copies: List[str] = []
 
 
 class PlotUpdate(BaseModel):
@@ -29,7 +35,6 @@ class PlotUpdate(BaseModel):
     description: Optional[str] = None
     area_sqft: Optional[float] = None
     price: Optional[float] = None
-    address: Optional[str] = None
     type: Optional[str] = None
 
 
