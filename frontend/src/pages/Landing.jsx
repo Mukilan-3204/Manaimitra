@@ -21,10 +21,10 @@ export default function Landing() {
             Your trusted partner for seamless property transactions.
           </p>
           <div className="hero-cta">
-            <Link to="/buyer" className="btn btn-primary btn-lg" id="hero-buyer-btn">
+            <Link to={isAuthenticated ? "/buyer" : "/signup?role=buyer"} className="btn btn-primary btn-lg" id="hero-buyer-btn">
               🔍 Browse as Buyer
             </Link>
-            <Link to={isAuthenticated ? "/seller" : "/signup"} className="btn btn-secondary btn-lg" id="hero-seller-btn">
+            <Link to={isAuthenticated ? "/seller" : "/signup?role=seller"} className="btn btn-secondary btn-lg" id="hero-seller-btn">
               📝 List as Seller
             </Link>
           </div>
@@ -54,13 +54,13 @@ export default function Landing() {
         <h2 className="section-title">Choose Your Path</h2>
         <p className="section-desc">Whether you're looking to buy or sell, we have you covered.</p>
         <div className="role-cards">
-          <Link to="/buyer" className="role-card" id="role-buyer">
+          <Link to={isAuthenticated ? "/buyer" : "/signup?role=buyer"} className="role-card" id="role-buyer">
             <div className="role-card-icon">🏡</div>
             <h3>Buyer</h3>
             <p>Browse plots across 5 Madurai divisions. Explore by area, compare prices, and find your dream plot.</p>
             <span className="role-card-arrow">Explore →</span>
           </Link>
-          <Link to={isAuthenticated ? "/seller" : "/signup"} className="role-card" id="role-seller">
+          <Link to={isAuthenticated ? "/seller" : "/signup?role=seller"} className="role-card" id="role-seller">
             <div className="role-card-icon">💼</div>
             <h3>Seller</h3>
             <p>List your property with details and images. AI-verified listings get approved fast and reach genuine buyers.</p>
