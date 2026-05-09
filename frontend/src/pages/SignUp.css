@@ -1,0 +1,212 @@
+.signup-bg {
+  background: linear-gradient(135deg, #060d1f 0%, #0d1f3c 50%, #0a1628 100%);
+  min-height: 100vh;
+}
+
+.signup-wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-2xl) var(--space-md);
+}
+
+.signup-card {
+  max-width: 460px;
+  width: 100%;
+  padding: var(--space-2xl);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+/* Logo in signup */
+.signup-logo-wrap {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: var(--space-xl);
+  justify-content: center;
+}
+
+.signup-svg-logo {
+  background: white;
+  border-radius: 10px;
+  padding: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.signup-brand {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: white;
+  letter-spacing: 1.5px;
+}
+
+.signup-brand span { color: #3a7d44; }
+
+.signup-tagline {
+  font-size: 0.6rem;
+  color: #3a7d44;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.signup-heading {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--color-text);
+  text-align: center;
+  margin-bottom: var(--space-lg);
+}
+
+/* Role choice */
+.role-choose-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-md);
+  margin-bottom: var(--space-xl);
+}
+
+.role-choose-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: var(--space-xl) var(--space-md);
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  font-family: var(--font-body);
+}
+
+.role-choose-btn:hover {
+  background: rgba(58,125,68,0.1);
+  border-color: rgba(58,125,68,0.4);
+  transform: translateY(-3px);
+}
+
+.role-choose-icon { font-size: 2rem; }
+
+.role-choose-label {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: white;
+}
+
+.role-choose-sub {
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+}
+
+.signup-note {
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+}
+
+.signup-note a { color: #3a7d44; }
+
+/* Role badge */
+.signup-role-badge {
+  display: inline-block;
+  padding: 6px 16px;
+  background: rgba(58,125,68,0.12);
+  border: 1px solid rgba(58,125,68,0.3);
+  border-radius: var(--radius-full);
+  color: #4caf60;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: var(--space-lg);
+  text-align: center;
+  width: 100%;
+}
+
+/* Errors / Info */
+.auth-error {
+  background: rgba(239,68,68,0.1);
+  border: 1px solid rgba(239,68,68,0.3);
+  color: var(--color-danger);
+  padding: 10px 14px;
+  border-radius: var(--radius-md);
+  font-size: 0.85rem;
+  margin-bottom: var(--space-md);
+}
+
+.auth-info {
+  background: rgba(34,197,94,0.1);
+  border: 1px solid rgba(34,197,94,0.3);
+  color: var(--color-success);
+  padding: 10px 14px;
+  border-radius: var(--radius-md);
+  font-size: 0.85rem;
+  margin-bottom: var(--space-md);
+}
+
+/* Google button */
+.btn-google {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: white;
+  color: #333;
+  font-weight: 600;
+  padding: 12px 20px;
+  border-radius: var(--radius-full);
+  font-size: 0.95rem;
+  cursor: pointer;
+  border: none;
+  font-family: var(--font-body);
+  transition: all var(--transition-normal);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  margin-bottom: var(--space-md);
+}
+
+.btn-google:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.4); }
+
+/* Divider */
+.auth-divider {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  margin-bottom: var(--space-md);
+}
+
+.auth-divider::before,
+.auth-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: rgba(255,255,255,0.08);
+}
+
+.auth-divider span {
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.auth-form { display: flex; flex-direction: column; gap: var(--space-sm); }
+
+.auth-switch-btn {
+  background: none;
+  border: none;
+  color: #3a7d44;
+  font-size: 0.82rem;
+  cursor: pointer;
+  font-family: var(--font-body);
+  padding: 6px 0;
+  text-align: center;
+  transition: color var(--transition-fast);
+}
+
+.auth-switch-btn:hover { color: #4caf60; }

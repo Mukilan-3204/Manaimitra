@@ -1,0 +1,99 @@
+.about-hero {
+  background: var(--gradient-hero);
+  padding: var(--space-4xl) 0 var(--space-3xl);
+  text-align: center;
+}
+
+.about-hero h1 {
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  font-weight: 800;
+  background: var(--gradient-gold);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: var(--space-md);
+}
+
+.about-hero-sub {
+  color: var(--color-text-secondary);
+  max-width: 600px;
+  margin: 0 auto;
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+.about-section { padding: var(--space-3xl) 0; }
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-2xl);
+  align-items: start;
+}
+
+.about-content h2 {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  color: var(--color-gold);
+  margin-bottom: var(--space-lg);
+}
+
+.about-content p {
+  color: var(--color-text-secondary);
+  line-height: 1.8;
+  margin-bottom: var(--space-lg);
+}
+
+.about-values {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-md);
+}
+
+.about-value {
+  text-align: center;
+  padding: var(--space-lg);
+}
+
+.about-value span { font-size: 1.8rem; display: block; margin-bottom: var(--space-sm); }
+.about-value h4 { font-family: var(--font-display); font-size: 0.95rem; margin-bottom: 4px; }
+.about-value p { font-size: 0.8rem; color: var(--color-text-muted); }
+
+.about-contact {
+  padding: 0 0 var(--space-4xl);
+}
+
+.about-contact-card {
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.about-contact-card h2 {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  color: var(--color-gold);
+  margin-bottom: var(--space-sm);
+}
+
+.about-contact-card > p {
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-xl);
+}
+
+.about-contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  text-align: left;
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+}
+
+.about-contact-info strong { color: var(--color-text); }
+
+@media (max-width: 768px) {
+  .about-grid { grid-template-columns: 1fr; }
+  .about-hero h1 { font-size: 1.8rem; }
+}

@@ -1,0 +1,395 @@
+/* ===== Division Cards ===== */
+.divisions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: var(--space-xl);
+  padding-bottom: var(--space-3xl);
+}
+
+.division-card {
+  position: relative;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  height: 280px;
+  display: flex;
+  align-items: flex-end;
+  text-decoration: none;
+  color: var(--color-text);
+  transition: all var(--transition-normal);
+  animation: scaleIn 0.5s ease both;
+}
+
+.division-card-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  transition: transform var(--transition-slow);
+}
+
+.division-card:hover .division-card-bg {
+  transform: scale(1.08);
+}
+
+/* No-image division card (West) */
+.division-card-plain {
+  position: absolute;
+  inset: 0;
+}
+
+.division-card-noimg {
+  border: 1px solid rgba(212,168,67,0.15);
+}
+
+.division-card-noimg .division-icon {
+  font-size: 3.5rem;
+  margin-bottom: var(--space-md);
+  filter: drop-shadow(0 4px 12px rgba(0,0,0,0.4));
+}
+
+.division-card-noimg h3 {
+  font-size: 1.6rem;
+}
+
+.division-card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(10,10,15,0.95) 0%, rgba(10,10,15,0.3) 60%, transparent 100%);
+}
+
+.division-card-content {
+  position: relative;
+  padding: var(--space-xl);
+  width: 100%;
+  z-index: 1;
+}
+
+.division-icon {
+  font-size: 2rem;
+  display: block;
+  margin-bottom: var(--space-sm);
+}
+
+.division-card h3 {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.division-card p {
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-sm);
+  line-height: 1.5;
+}
+
+.division-card-link {
+  color: var(--color-gold);
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: letter-spacing var(--transition-fast);
+}
+
+.division-card:hover .division-card-link {
+  letter-spacing: 1.5px;
+}
+
+.division-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-gold-lg);
+}
+
+/* ===== Places Grid ===== */
+.places-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: var(--space-lg);
+  padding-bottom: var(--space-3xl);
+}
+
+.place-card {
+  text-decoration: none;
+  color: var(--color-text);
+  position: relative;
+  animation: scaleIn 0.4s ease both;
+}
+
+.place-card-number {
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: rgba(212,168,67,0.12);
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  line-height: 1;
+}
+
+.place-card h3 {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.place-card p {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-md);
+}
+
+.place-card-link {
+  color: var(--color-gold);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+/* ===== Plots Grid ===== */
+.plots-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--space-lg);
+  padding-bottom: var(--space-3xl);
+}
+
+.plot-card {
+  text-decoration: none;
+  color: var(--color-text);
+  padding: 0;
+  overflow: hidden;
+  animation: scaleIn 0.4s ease both;
+}
+
+.plot-card-image {
+  position: relative;
+  height: 180px;
+  overflow: hidden;
+}
+
+.plot-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-normal);
+}
+
+.plot-card:hover .plot-card-image img {
+  transform: scale(1.06);
+}
+
+.plot-card-type {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  padding: 4px 10px;
+  background: rgba(10,10,15,0.8);
+  backdrop-filter: blur(8px);
+  border-radius: var(--radius-sm);
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--color-gold);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.plot-card-body {
+  padding: var(--space-lg);
+}
+
+.plot-card-body h3 {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: var(--space-sm);
+  line-height: 1.4;
+}
+
+.plot-card-meta {
+  display: flex;
+  gap: var(--space-md);
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-md);
+}
+
+.plot-card-price {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--color-gold);
+}
+
+/* ===== Plot Detail ===== */
+.plot-detail {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-2xl);
+  padding-bottom: var(--space-3xl);
+  align-items: start;
+}
+
+.plot-detail-main-img {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  aspect-ratio: 4/3;
+}
+
+.plot-detail-main-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.plot-detail-thumbs {
+  display: flex;
+  gap: var(--space-sm);
+  margin-top: var(--space-md);
+}
+
+.plot-thumb {
+  width: 70px;
+  height: 50px;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  border: 2px solid transparent;
+  cursor: pointer;
+  padding: 0;
+  transition: border-color var(--transition-fast);
+}
+
+.plot-thumb.active,
+.plot-thumb:hover {
+  border-color: var(--color-gold);
+}
+
+.plot-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.plot-detail-info h1 {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-text);
+  margin: var(--space-md) 0 var(--space-sm);
+}
+
+.plot-detail-price {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 800;
+  background: var(--gradient-gold);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: var(--space-xl);
+}
+
+.plot-detail-specs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-md);
+  margin-bottom: var(--space-xl);
+  padding: var(--space-lg);
+  background: rgba(255,255,255,0.02);
+  border-radius: var(--radius-md);
+  border: var(--border-subtle);
+}
+
+.plot-spec-label {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 2px;
+}
+
+.plot-spec-value {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--color-text);
+}
+
+.plot-detail-section {
+  margin-bottom: var(--space-lg);
+}
+
+.plot-detail-section h3 {
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-gold);
+  margin-bottom: var(--space-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Owner-only section */
+.owner-only-section {
+  background: rgba(212,168,67,0.05);
+  border: 1px solid rgba(212,168,67,0.2);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+}
+
+.plot-private-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+
+.plot-private-row:last-child { border-bottom: none; }
+
+/* Contact owner card */
+.contact-owner-card {
+  margin-top: var(--space-lg);
+  padding: var(--space-lg);
+  background: rgba(58,125,68,0.08);
+  border: 1px solid rgba(58,125,68,0.25);
+  border-radius: var(--radius-lg);
+  text-align: center;
+}
+
+.contact-owner-card h4 {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  color: var(--color-text);
+  margin-bottom: var(--space-sm);
+}
+
+.contact-owner-card > p {
+  color: var(--color-text-secondary);
+  font-size: 0.9rem;
+  margin-bottom: var(--space-lg);
+}
+
+.contact-details {
+  display: flex;
+  gap: var(--space-md);
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: var(--space-md);
+}
+
+.contact-note {
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+  margin: 0 !important;
+}
+
+.plot-detail-section p {
+  color: var(--color-text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+  .plot-detail { grid-template-columns: 1fr; }
+  .divisions-grid { grid-template-columns: 1fr; }
+}
