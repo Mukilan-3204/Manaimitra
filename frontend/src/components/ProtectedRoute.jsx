@@ -27,8 +27,11 @@ export default function ProtectedRoute({ children, role }) {
   // Owner can access everything
   if (userRole === 'owner') return children
 
+  // If no role yet (new user), default to buyer access
+  const effectiveRole = userRole || 'buyer'
+
   // Role required and doesn't match → redirect to landing with message
-  if (role && userRole !== role) {
+  if (role && effectiveRole !== role) {
     return (
       <div className="page page-enter">
         <div className="container">

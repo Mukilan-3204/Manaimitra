@@ -29,13 +29,16 @@ export default function SignUp() {
 
     if (isSignIn) {
       // Sign In
-      const { error } = await supabase.auth.signInWithPassword({ email, password })
+      const { data: signInData, error } = await supabase.auth.signInWithPassword({ email, password })
       if (error) {
         setError('Wrong email or password. Please try again.')
         setLoading(false)
         return
       }
-      navigate('/')
+      const { data: profile } = await supabase
+        .from('profiles').select('role').eq('id', signInData.user.id).single()
+      const userRole = profile?.role || 'buyer'
+      navigate(userRole === 'seller' ? '/seller' : '/buyer')
     } else {
       // Sign Up
       const { data, error } = await supabase.auth.signUp({
@@ -56,9 +59,9 @@ export default function SignUp() {
           role: role
         })
         if (data.session) {
-          navigate('/')
+          navigate(role === 'seller' ? '/seller' : '/buyer')
         } else {
-          navigate('/')
+          navigate(role === 'seller' ? '/seller' : '/buyer')
         }
       }
     }
