@@ -1,139 +1,114 @@
+import { useState, useEffect } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
-import { useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase'
 import './SignUp.css'
 
 export default function SignUp() {
-  const { isAuthenticated } = useAuth()
+  const { isAuthenticated, role, signInWithGoogle } = useAuth()
   const navigate = useNavigate()
-  const [searchParams] = useSearchParams()
+  const [params] = useSearchParams()
+  const intendedRole = params.get('role') || 'buyer'
 
-  // Role comes from URL: /signup?role=buyer or /signup?role=seller
-  const role = searchParams.get('role') || 'buyer'
-
+  const [mode, setMode] = useState('login') // login | register
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
-  const [isSignIn, setIsSignIn] = useState(false)
+  const [sent, setSent] = useState(false)
 
   useEffect(() => {
-    if (isAuthenticated) navigate('/')
-  }, [isAuthenticated, navigate])
-
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-    setLoading(true)
-    setError('')
-
-    if (isSignIn) {
-      // Sign In
-      const { data: signInData, error } = await supabase.auth.signInWithPassword({ email, password })
-      if (error) {
-        setError('Wrong email or password. Please try again.')
-        setLoading(false)
-        return
-      }
-      const { data: profile } = await supabase
-        .from('profiles').select('role').eq('id', signInData.user.id).single()
-      const userRole = profile?.role || 'buyer'
-      navigate(userRole === 'seller' ? '/seller' : '/buyer')
-    } else {
-      // Sign Up
-      const { data, error } = await supabase.auth.signUp({
-        email,
-        password,
-        options: { data: { role } }
-      })
-      if (error) {
-        setError(error.message)
-        setLoading(false)
-        return
-      }
-      if (data.user) {
-        await supabase.from('profiles').upsert({
-          id: data.user.id,
-          email: data.user.email,
-          full_name: '',
-          role: role
-        })
-        if (data.session) {
-          navigate(role === 'seller' ? '/seller' : '/buyer')
-        } else {
-          navigate(role === 'seller' ? '/seller' : '/buyer')
-        }
-      }
+    if (isAuthenticated) {
+      if (role === 'owner') navigate('/admin')
+      else if (role === 'seller') navigate('/seller/dashboard')
+      else navigate('/buyer')
     }
+  }, [isAuthenticated, role])
+
+  const handleGoogle = async () => {
+    setLoading(true); setError('')
+    const { error: e } = await signInWithGoogle()
+    if (e) { setError(e.message); setLoading(false) }
+  }
+
+  const handleEmail = async (e) => {
+    e.preventDefault(); setLoading(true); setError('')
+    try {
+      if (mode === 'register') {
+        const { data, error: signUpErr } = await supabase.auth.signUp({ email, password })
+        if (signUpErr) throw signUpErr
+        // If user is immediately confirmed (email confirm OFF), session exists
+        if (data?.session) {
+          // User is logged in — navigation handled by useEffect above
+          return
+        }
+        // If email confirm is ON — show check email message
+        setSent(true)
+      } else {
+        const { error: e } = await supabase.auth.signInWithPassword({ email, password })
+        if (e) throw e
+      }
+    } catch (err) { setError(err.message) }
     setLoading(false)
   }
 
-  return (
-    <div className="page page-enter signup-bg">
-      <div className="signup-wrapper">
+  if (sent) return (
+    <div className="page page-enter">
+      <div className="signup-wrap">
         <div className="signup-card glass-card">
+          <div style={{ fontSize: '3rem', textAlign: 'center', marginBottom: '16px' }}>📧</div>
+          <h2 style={{ textAlign: 'center', marginBottom: '8px' }}>Check your email</h2>
+          <p style={{ color: 'var(--text2)', textAlign: 'center' }}>We sent a confirmation link to <strong>{email}</strong>. Click it to activate your account.</p>
+        </div>
+      </div>
+    </div>
+  )
 
-          {/* Logo */}
-          <div className="signup-logo-wrap">
-            <svg width="40" height="34" viewBox="0 0 48 40" fill="none">
-              <circle cx="8" cy="5" r="4.5" fill="#1a3a6b"/>
-              <path d="M2 36V18C2 15 5 13 8 13C10 13 12 14.5 13 16L18 24" fill="#1a3a6b"/>
-              <circle cx="40" cy="5" r="4.5" fill="#3a7d44"/>
-              <path d="M46 36V18C46 15 43 13 40 13C38 13 36 14.5 35 16L30 24" fill="#3a7d44"/>
-              <path d="M16 26C18 28 21 30 24 30C27 30 30 28 32 26" stroke="#1a3a6b" strokeWidth="3" strokeLinecap="round"/>
+  return (
+    <div className="page page-enter">
+      <div className="signup-wrap">
+        {/* Role banner */}
+        <div className={`role-banner ${intendedRole === 'seller' ? 'role-banner-green' : 'role-banner-blue'}`}>
+          {intendedRole === 'seller' ? '🏷️ Joining as Seller' : '🏠 Joining as Buyer'}
+        </div>
+
+        <div className="signup-card glass-card">
+          <div className="signup-header">
+            <h1>{mode === 'login' ? 'Welcome Back' : 'Create Account'}</h1>
+            <p>Sign {mode === 'login' ? 'in' : 'up'} to ManaiMitra</p>
+          </div>
+
+          {/* Google */}
+          <button className="google-btn" onClick={handleGoogle} disabled={loading}>
+            <svg width="20" height="20" viewBox="0 0 24 24">
+              <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+              <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+              <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+              <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
             </svg>
-            <div>
-              <div className="signup-brand">MANAI<span>M</span>ITRA</div>
-            </div>
-          </div>
+            Continue with Google
+          </button>
 
-          {/* Role badge */}
-          <div className="signup-role-badge">
-            {role === 'buyer' ? '🏡 Buyer' : '💼 Seller'} — {isSignIn ? 'Sign In' : 'Create Account'}
-          </div>
+          <div className="signup-divider"><span>or</span></div>
 
-          {error && <div className="auth-error">{error}</div>}
+          {error && <div className="form-error">{error}</div>}
 
-          {/* Form */}
-          <form onSubmit={handleSubmit} className="auth-form">
+          <form onSubmit={handleEmail} className="signup-form">
             <div className="form-group">
               <label>Email Address</label>
-              <input
-                className="form-input"
-                type="email"
-                value={email}
-                onChange={e => setEmail(e.target.value)}
-                placeholder="you@gmail.com"
-                required
-              />
+              <input className="form-input" type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="you@example.com" required />
             </div>
             <div className="form-group">
               <label>Password</label>
-              <input
-                className="form-input"
-                type="password"
-                value={password}
-                onChange={e => setPassword(e.target.value)}
-                placeholder="Min 6 characters"
-                required
-                minLength={6}
-              />
+              <input className="form-input" type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="Min 6 characters" minLength={6} required />
             </div>
-            <button className="btn btn-primary" style={{width:'100%'}} type="submit" disabled={loading}>
-              {loading ? 'Please wait...' : isSignIn ? 'Sign In' : 'Create Account'}
+            <button type="submit" className={`btn ${intendedRole === 'seller' ? 'btn-green' : 'btn-primary'} btn-lg`} style={{ width: '100%' }} disabled={loading}>
+              {loading ? 'Please wait...' : mode === 'login' ? 'Sign In' : 'Create Account'}
             </button>
           </form>
 
-          <button
-            type="button"
-            className="auth-switch-btn"
-            onClick={() => { setIsSignIn(!isSignIn); setError('') }}
-          >
-            {isSignIn ? "Don't have an account? Create one" : 'Already have an account? Sign In'}
-          </button>
-
-          <button className="back-btn" style={{marginTop:'16px'}} onClick={() => navigate(-1)}>
-            ← Go Back
+          <button className="toggle-mode" onClick={() => { setMode(m => m === 'login' ? 'register' : 'login'); setError('') }}>
+            {mode === 'login' ? "Don't have an account? Sign Up" : 'Already have an account? Sign In'}
           </button>
         </div>
       </div>

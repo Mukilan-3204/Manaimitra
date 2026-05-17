@@ -1,83 +1,91 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
-import { useState } from 'react'
+import { useLanguage } from '../context/LanguageContext'
+import { useState, useEffect } from 'react'
 import './Header.css'
 
 export default function Header() {
   const { user, role, isOwner, signOut, isAuthenticated } = useAuth()
+  const { lang, toggleLang } = useLanguage()
   const location = useLocation()
   const navigate = useNavigate()
   const [menuOpen, setMenuOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
 
-  const canGoBack = location.pathname !== '/'
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 20)
+    window.addEventListener('scroll', onScroll)
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  const close = () => setMenuOpen(false)
 
   return (
-    <header className="header">
+    <header className={`header ${scrolled ? 'scrolled' : ''}`}>
       <div className="header-inner container">
         {/* Logo */}
-        <Link to="/" className="header-logo" onClick={() => setMenuOpen(false)}>
-          <div className="logo-icon-wrap">
-            <svg width="38" height="32" viewBox="0 0 38 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M4 28V6L14 18L19 10L24 18L34 6V28" stroke="none"/>
-              {/* Blue figure */}
-              <circle cx="6" cy="4" r="3.5" fill="#1a3a6b"/>
-              <path d="M2 28V14C2 12 4 10 6 10C7.5 10 9 11 10 12.5L14 18" fill="#1a3a6b"/>
-              {/* Green figure */}
-              <circle cx="32" cy="4" r="3.5" fill="#3a7d44"/>
-              <path d="M36 28V14C36 12 34 10 32 10C30.5 10 29 11 28 12.5L24 18" fill="#3a7d44"/>
-              {/* Handshake */}
-              <path d="M12 20C14 22 16 23 19 23C22 23 24 22 26 20" stroke="#1a3a6b" strokeWidth="2.5" strokeLinecap="round"/>
-              <path d="M14 21.5C16 23.5 17.5 24.5 19 24.5C20.5 24.5 22 23.5 24 21.5" stroke="#3a7d44" strokeWidth="1.5" strokeLinecap="round"/>
+        <Link to="/" className="header-logo" onClick={close}>
+          <div className="logo-mark">
+            <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+              <rect width="36" height="36" rx="10" fill="url(#lg1)"/>
+              <path d="M8 26V16l7-6 7 6v10" stroke="#fff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M15 26v-6h4v6" stroke="#fff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
+              <circle cx="28" cy="12" r="4" fill="#10b981" stroke="#fff" strokeWidth="1.5"/>
+              <path d="M26.5 12l1 1 2-2" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              <defs>
+                <linearGradient id="lg1" x1="0" y1="0" x2="36" y2="36" gradientUnits="userSpaceOnUse">
+                  <stop stopColor="#2563eb"/>
+                  <stop offset="1" stopColor="#1d4ed8"/>
+                </linearGradient>
+              </defs>
             </svg>
           </div>
-          <div className="logo-text-wrap">
-            <span className="logo-name">MANAI<span className="logo-accent">M</span>ITRA</span>
-            <span className="logo-tagline">ONE COMMITMENT. LIMITLESS REACH.</span>
+          <div className="logo-text">
+            <span className="logo-name">Manai<span className="logo-accent">Mitra</span></span>
+            <span className="logo-tag">One Commitment. Limitless Reach.</span>
           </div>
         </Link>
 
-        <button className="hamburger" onClick={() => setMenuOpen(!menuOpen)} aria-label="Menu">
-          <span className={`hline ${menuOpen ? 'open' : ''}`}></span>
+        {/* Hamburger */}
+        <button className={`hamburger ${menuOpen ? 'open' : ''}`} onClick={() => setMenuOpen(!menuOpen)} aria-label="Menu">
+          <span/><span/><span/>
         </button>
 
+        {/* Nav */}
         <nav className={`header-nav ${menuOpen ? 'open' : ''}`}>
-          {canGoBack && (
-            <button className="nav-link nav-back" onClick={() => { navigate(-1); setMenuOpen(false) }}>
-              ← Back
-            </button>
-          )}
+          <Link to="/" className={`nav-link ${location.pathname === '/' ? 'active' : ''}`} onClick={close}>Home</Link>
 
-          <Link to="/" className={`nav-link ${location.pathname === '/' ? 'active' : ''}`} onClick={() => setMenuOpen(false)}>Home</Link>
-
-          {/* Role-specific nav items */}
           {isAuthenticated && role === 'buyer' && (
-            <Link to="/buyer" className={`nav-link ${location.pathname.startsWith('/buyer') ? 'active' : ''}`} onClick={() => setMenuOpen(false)}>Browse Plots</Link>
+            <Link to="/buyer" className={`nav-link ${location.pathname.startsWith('/buyer') ? 'active' : ''}`} onClick={close}>Browse Plots</Link>
           )}
           {isAuthenticated && role === 'seller' && (
             <>
-              <Link to="/seller" className={`nav-link ${location.pathname === '/seller' ? 'active' : ''}`} onClick={() => setMenuOpen(false)}>List Property</Link>
-              <Link to="/seller/dashboard" className={`nav-link ${location.pathname === '/seller/dashboard' ? 'active' : ''}`} onClick={() => setMenuOpen(false)}>My Listings</Link>
+              <Link to="/seller" className={`nav-link ${location.pathname === '/seller' ? 'active' : ''}`} onClick={close}>New Listing</Link>
+              <Link to="/seller/dashboard" className={`nav-link ${location.pathname === '/seller/dashboard' ? 'active' : ''}`} onClick={close}>My Listings</Link>
             </>
           )}
           {isOwner && (
-            <Link to="/admin" className={`nav-link nav-admin ${location.pathname.startsWith('/admin') ? 'active' : ''}`} onClick={() => setMenuOpen(false)}>👑 Owner Panel</Link>
+            <Link to="/admin" className={`nav-link nav-admin ${location.pathname.startsWith('/admin') ? 'active' : ''}`} onClick={close}>👑 Admin</Link>
           )}
 
-          <Link to="/about" className={`nav-link ${location.pathname === '/about' ? 'active' : ''}`} onClick={() => setMenuOpen(false)}>About</Link>
+          {/* Language Toggle */}
+          <button className="lang-toggle" onClick={toggleLang} title="Switch Language">
+            {lang === 'en' ? 'தமிழ்' : 'EN'}
+          </button>
 
           {isAuthenticated ? (
             <div className="nav-user">
-              <Link to="/profile" className="nav-avatar-link" onClick={() => setMenuOpen(false)}>
+              <Link to="/profile" className="nav-avatar-wrap" onClick={close}>
                 <img
-                  src={user?.user_metadata?.avatar_url || `https://ui-avatars.com/api/?name=${encodeURIComponent(user?.email || 'U')}&background=1a3a6b&color=fff&size=64`}
+                  src={user?.user_metadata?.avatar_url || `https://ui-avatars.com/api/?name=${encodeURIComponent(user?.email || 'U')}&background=2563eb&color=fff&size=64`}
                   alt="Profile"
                   className="nav-avatar"
                 />
               </Link>
-              <button className="btn btn-secondary btn-sm" onClick={() => { signOut(); setMenuOpen(false) }}>Sign Out</button>
+              <button className="btn btn-ghost btn-sm" onClick={() => { signOut(); close() }}>Sign Out</button>
             </div>
           ) : (
-            <Link to="/signup" className="btn btn-primary btn-sm" onClick={() => setMenuOpen(false)}>Sign Up</Link>
+            <Link to="/signup" className="btn btn-primary btn-sm" onClick={close}>Sign Up</Link>
           )}
         </nav>
       </div>

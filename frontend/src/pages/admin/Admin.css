@@ -1,101 +1,27 @@
-.admin-stats {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: var(--space-md);
-  margin-bottom: var(--space-xl);
-}
+.admin-cards { display: flex; flex-direction: column; gap: 20px; }
 
-.admin-stat {
-  text-align: center;
-  padding: var(--space-lg);
-}
+.admin-plot-card { padding: 24px; display: flex; flex-direction: column; gap: 16px; }
+.apc-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; }
+.apc-header h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 4px; }
+.apc-loc { font-size: 0.82rem; color: var(--text2); }
 
-.admin-stat-num {
-  display: block;
-  font-family: var(--font-display);
-  font-size: 2.2rem;
-  font-weight: 800;
-  color: var(--color-gold);
-}
+.apc-specs { display: flex; flex-wrap: wrap; gap: 8px; }
+.apc-specs span { font-size: 0.8rem; padding: 4px 12px; background: var(--surface-h); border: 1px solid var(--border); border-radius: var(--r-full); color: var(--text2); }
 
-.admin-stat-label {
-  font-size: 0.8rem;
-  color: var(--color-text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
+.apc-private { background: rgba(245,158,11,0.05); border: 1px solid rgba(245,158,11,0.2); border-radius: var(--r-md); padding: 16px; display: flex; flex-direction: column; gap: 10px; }
+.apc-private-title { font-size: 0.78rem; font-weight: 800; color: var(--gold); letter-spacing: 0.06em; text-transform: uppercase; }
+.apc-private-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.apc-private-grid span { font-size: 0.82rem; color: var(--text2); }
+.apc-private-grid strong { color: var(--text); }
+.apc-docs { display: flex; flex-wrap: wrap; gap: 8px; }
 
-.admin-tabs {
-  display: flex;
-  gap: var(--space-sm);
-  margin-bottom: var(--space-xl);
-  border-bottom: 1px solid rgba(255,255,255,0.06);
-  padding-bottom: var(--space-sm);
-}
+.apc-photos { display: flex; gap: 8px; overflow-x: auto; }
+.apc-thumb { width: 80px; height: 60px; object-fit: cover; border-radius: var(--r-sm); flex-shrink: 0; border: 1px solid var(--border2); }
+.apc-more { width: 80px; height: 60px; background: var(--surface-h); border-radius: var(--r-sm); display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 700; color: var(--text2); border: 1px solid var(--border2); flex-shrink: 0; }
 
-.admin-tab {
-  padding: 10px 20px;
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: var(--color-text-muted);
-  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
-  transition: all var(--transition-fast);
-  cursor: pointer;
-  background: none;
-  border: none;
-  font-family: var(--font-body);
-}
+.apc-actions { display: flex; gap: 10px; flex-wrap: wrap; padding-top: 8px; border-top: 1px solid var(--border); }
 
-.admin-tab:hover { color: var(--color-text); }
-
-.admin-tab.active {
-  color: var(--color-gold);
-  background: rgba(212,168,67,0.08);
-  border-bottom: 2px solid var(--color-gold);
-}
-
-.admin-cards {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-lg);
-  padding-bottom: var(--space-3xl);
-}
-
-.admin-listing-card { padding: var(--space-xl); }
-
-.admin-listing-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: var(--space-lg);
-}
-
-.admin-listing-header h3 {
-  font-family: var(--font-display);
-  font-size: 1.1rem;
-  font-weight: 600;
-}
-
-.admin-listing-details {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--space-sm) var(--space-xl);
-  font-size: 0.9rem;
-  color: var(--color-text-secondary);
-  margin-bottom: var(--space-lg);
-}
-
-.admin-listing-details strong { color: var(--color-text); }
-
-.admin-listing-actions {
-  display: flex;
-  gap: var(--space-sm);
-  justify-content: flex-end;
-  padding-top: var(--space-md);
-  border-top: var(--border-subtle);
-}
-
-@media (max-width: 768px) {
-  .admin-stats { grid-template-columns: repeat(2, 1fr); }
-  .admin-listing-details { grid-template-columns: 1fr; }
+@media (max-width: 600px) {
+  .apc-private-grid { grid-template-columns: 1fr; }
+  .apc-header { flex-direction: column; }
 }

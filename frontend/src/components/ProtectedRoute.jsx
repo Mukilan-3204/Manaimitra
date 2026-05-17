@@ -13,7 +13,7 @@ export default function ProtectedRoute({ children, role }) {
       <div className="page">
         <div className="loading-container">
           <div className="spinner"></div>
-          <p style={{ color: 'var(--color-text-muted)' }}>Loading...</p>
+          <p style={{ color: 'var(--text2)' }}>Loading...</p>
         </div>
       </div>
     )
@@ -42,7 +42,7 @@ export default function ProtectedRoute({ children, role }) {
               This section is only for <strong>{role}s</strong>.<br />
               You are signed in as a <strong>{userRole}</strong>.
             </p>
-            <p style={{ color: 'var(--color-text-muted)', fontSize: '0.85rem' }}>
+            <p style={{ color: 'var(--text3)', fontSize: '0.85rem' }}>
               To switch roles, go to your Profile page.
             </p>
             <a href="/profile" className="btn btn-primary" style={{ marginTop: '24px', display: 'inline-flex' }}>

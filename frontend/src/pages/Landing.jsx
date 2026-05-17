@@ -1,100 +1,121 @@
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import './Landing.css'
 
+const STATS = [
+  { num: '5', label: 'Divisions' },
+  { num: '50+', label: 'Locations' },
+  { num: '500+', label: 'Plots Listed' },
+  { num: '100%', label: 'Verified' },
+]
+
+const FEATURES = [
+  { icon: '🤖', title: 'AI Verified', desc: 'Every listing auto-checked by AI before owner review.' },
+  { icon: '🔒', title: 'Secure Auth', desc: 'Google sign-in — no passwords, no worries.' },
+  { icon: '📍', title: 'Local Expertise', desc: '5 Madurai divisions, 50+ areas fully mapped.' },
+  { icon: '👑', title: 'Owner Approved', desc: 'Every listing reviewed before going live.' },
+]
+
 export default function Landing() {
-  const { isAuthenticated } = useAuth()
+  const navigate = useNavigate()
+  const { isAuthenticated, role } = useAuth()
+
+  const handleBuyer = () => {
+    if (isAuthenticated && role === 'buyer') navigate('/buyer')
+    else navigate('/signup?role=buyer')
+  }
+  const handleSeller = () => {
+    if (isAuthenticated && role === 'seller') navigate('/seller/dashboard')
+    else navigate('/signup?role=seller')
+  }
 
   return (
-    <div className="page page-enter">
-      {/* Hero Section */}
+    <div className="landing">
+      {/* Hero */}
       <section className="hero">
-        <div className="hero-bg-particles"></div>
-        <div className="container hero-content">
-          <div className="hero-badge">🏠 Madurai's Premium Real Estate Platform</div>
+        <div className="hero-bg-grid"/>
+        <div className="container hero-inner">
+          <div className="hero-badge">🏡 Madurai's #1 Real Estate Platform</div>
           <h1 className="hero-title">
-            <span className="hero-title-line">Manai</span>
-            <span className="hero-title-line gold">Mitra</span>
+            Find Your Perfect<br/>
+            <span className="hero-gradient">Plot in Madurai</span>
           </h1>
           <p className="hero-subtitle">
-            Discover, list, and invest in premium plots across all divisions of Madurai district.
-            Your trusted partner for seamless property transactions.
+            Browse verified plots across all 5 Madurai divisions. Transparent listings,
+            owner-approved, with full legal documentation.
           </p>
-          <div className="hero-cta">
-            <Link to={isAuthenticated ? "/buyer" : "/signup?role=buyer"} className="btn btn-primary btn-lg" id="hero-buyer-btn">
-              🔍 Browse as Buyer
-            </Link>
-            <Link to={isAuthenticated ? "/seller" : "/signup?role=seller"} className="btn btn-secondary btn-lg" id="hero-seller-btn">
-              📝 List as Seller
-            </Link>
-          </div>
-          <div className="hero-stats">
-            <div className="hero-stat">
-              <span className="hero-stat-number">5</span>
-              <span className="hero-stat-label">Divisions</span>
-            </div>
-            <div className="hero-stat">
-              <span className="hero-stat-number">50</span>
-              <span className="hero-stat-label">Locations</span>
-            </div>
-            <div className="hero-stat">
-              <span className="hero-stat-number">500+</span>
-              <span className="hero-stat-label">Plots Listed</span>
-            </div>
-            <div className="hero-stat">
-              <span className="hero-stat-number">100%</span>
-              <span className="hero-stat-label">Verified</span>
-            </div>
-          </div>
-        </div>
-      </section>
 
-      {/* Role Selection */}
-      <section className="role-section container">
-        <h2 className="section-title">Choose Your Path</h2>
-        <p className="section-desc">Whether you're looking to buy or sell, we have you covered.</p>
-        <div className="role-cards">
-          <Link to={isAuthenticated ? "/buyer" : "/signup?role=buyer"} className="role-card" id="role-buyer">
-            <div className="role-card-icon">🏡</div>
-            <h3>Buyer</h3>
-            <p>Browse plots across 5 Madurai divisions. Explore by area, compare prices, and find your dream plot.</p>
-            <span className="role-card-arrow">Explore →</span>
-          </Link>
-          <Link to={isAuthenticated ? "/seller" : "/signup?role=seller"} className="role-card" id="role-seller">
-            <div className="role-card-icon">💼</div>
-            <h3>Seller</h3>
-            <p>List your property with details and images. AI-verified listings get approved fast and reach genuine buyers.</p>
-            <span className="role-card-arrow">Start Listing →</span>
-          </Link>
+          {/* Stats */}
+          <div className="hero-stats">
+            {STATS.map(s => (
+              <div key={s.label} className="hero-stat">
+                <span className="hero-stat-num">{s.num}</span>
+                <span className="hero-stat-label">{s.label}</span>
+              </div>
+            ))}
+          </div>
+
+          {/* CTA Cards */}
+          <div className="path-cards">
+            {/* Buyer Card */}
+            <div className="path-card path-card-buyer" onClick={handleBuyer} id="buyer-card">
+              <div className="path-card-glow buyer-glow"/>
+              <div className="path-card-icon">🏠</div>
+              <h2>I'm a Buyer</h2>
+              <p>Browse verified plots across Madurai. Compare prices, view photos, and connect with the owner via WhatsApp.</p>
+              <div className="path-card-tags">
+                <span>📍 5 Divisions</span>
+                <span>✅ Verified</span>
+                <span>💬 WhatsApp CTA</span>
+              </div>
+              <button className="btn btn-primary btn-lg path-card-btn">
+                Browse Plots →
+              </button>
+            </div>
+
+            {/* Seller Card */}
+            <div className="path-card path-card-seller" onClick={handleSeller} id="seller-card">
+              <div className="path-card-glow seller-glow"/>
+              <div className="path-card-icon">🏷️</div>
+              <h2>I'm a Seller</h2>
+              <p>List your property with full details, photos, and documents. Get owner-verified and reach genuine buyers.</p>
+              <div className="path-card-tags">
+                <span>📸 20 Photos</span>
+                <span>📄 Documents</span>
+                <span>👑 Verified</span>
+              </div>
+              <button onClick={handleSeller} className="btn btn-green btn-lg path-card-btn">
+                List Property →
+              </button>
+            </div>
+          </div>
         </div>
       </section>
 
       {/* Features */}
-      <section className="features-section container">
-        <h2 className="section-title">Why Manai Mitra?</h2>
-        <div className="features-grid">
-          <div className="feature-card glass-card">
-            <span className="feature-icon">🤖</span>
-            <h4>AI Verification</h4>
-            <p>Every listing passes through our AI pipeline for authenticity checks before approval.</p>
-          </div>
-          <div className="feature-card glass-card">
-            <span className="feature-icon">🔒</span>
-            <h4>Secure Auth</h4>
-            <p>Google authentication ensures only verified users can list and transact on the platform.</p>
-          </div>
-          <div className="feature-card glass-card">
-            <span className="feature-icon">📍</span>
-            <h4>Local Expertise</h4>
-            <p>Deep coverage of all 5 Madurai divisions with 50+ neighbourhoods mapped.</p>
-          </div>
-          <div className="feature-card glass-card">
-            <span className="feature-icon">✅</span>
-            <h4>Owner Approved</h4>
-            <p>Every listing is personally reviewed by our team before going live.</p>
+      <section className="features-section">
+        <div className="container">
+          <div className="section-label">WHY MANAI MITRA</div>
+          <h2 className="section-heading">Built for Madurai. Built for Trust.</h2>
+          <div className="features-grid">
+            {FEATURES.map(f => (
+              <div key={f.title} className="feature-card glass-card">
+                <div className="feature-icon">{f.icon}</div>
+                <h3>{f.title}</h3>
+                <p>{f.desc}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
+
+      {/* Footer strip */}
+      <div className="landing-footer">
+        <div className="container">
+          <span>© 2026 ManaiMitra — Madurai Real Estate Platform</span>
+          <span>For inquiries: <a href="https://wa.me/919566874744" target="_blank" rel="noreferrer" className="wa-link">WhatsApp +91 95668 74744</a></span>
+        </div>
+      </div>
     </div>
   )
 }

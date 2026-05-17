@@ -1,31 +1,9 @@
-// Madurai District Divisions, Places, and Sample Plot Data
-
 export const divisions = [
-  {
-    id: 1, name: 'Central', icon: '🏛️',
-    description: 'Heart of Madurai — historic temple area, bustling markets, and heritage landmarks.',
-    image: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=600'
-  },
-  {
-    id: 2, name: 'North', icon: '🌆',
-    description: 'Modern residential hubs — K.K. Nagar, Anna Nagar, and well-planned colonies.',
-    image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600'
-  },
-  {
-    id: 3, name: 'South', icon: '⛰️',
-    description: 'Scenic hill views — Pasumalai, Thirupparankundram, and premium residential zones.',
-    image: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600'
-  },
-  {
-    id: 4, name: 'East', icon: '🌿',
-    description: 'Rural charm meets growth — Melur, Alanganallur, and emerging investment corridors.',
-    image: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=600'
-  },
-  {
-    id: 5, name: 'West', icon: '🏞️',
-    description: 'Gateway to the hills — Vadipatti, Usilampatti, and agricultural belt opportunities.',
-    image: 'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c0?w=600'
-  }
+  { id: 1, name: 'Madurai Central', icon: '🏛️', color: '#2563eb', description: 'Historic temple area, bustling markets, and heritage landmarks.', image: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=700&q=80' },
+  { id: 2, name: 'Madurai North', icon: '🌆', color: '#7c3aed', description: 'Modern residential hubs — K.K. Nagar, Anna Nagar, well-planned colonies.', image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=700&q=80' },
+  { id: 3, name: 'Madurai South', icon: '⛰️', color: '#059669', description: 'Scenic hill views — Pasumalai, Thirupparankundram, premium zones.', image: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=700&q=80' },
+  { id: 4, name: 'Madurai East', icon: '🌿', color: '#0891b2', description: 'Rural charm meets growth — Melur, Alanganallur, investment corridors.', image: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=700&q=80' },
+  { id: 5, name: 'Madurai West', icon: '🏞️', color: '#d97706', description: 'Gateway to the hills — Vadipatti, Usilampatti, agricultural belt.', image: 'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c0?w=700&q=80' },
 ]
 
 export const places = {
@@ -39,7 +17,7 @@ export const places = {
     { id: 107, name: 'East Masi Street', description: 'Traditional bazaar street' },
     { id: 108, name: 'West Masi Street', description: 'Vibrant market corridor' },
     { id: 109, name: 'South Masi Street', description: 'Cultural shopping area' },
-    { id: 110, name: 'North Masi Street', description: 'Heritage commercial district' }
+    { id: 110, name: 'North Masi Street', description: 'Heritage commercial district' },
   ],
   2: [
     { id: 201, name: 'K.K. Nagar', description: 'Premium residential colony' },
@@ -51,7 +29,7 @@ export const places = {
     { id: 207, name: 'Jaihindpuram', description: 'Popular residential locality' },
     { id: 208, name: 'Aavin', description: 'Industrial and residential mix' },
     { id: 209, name: 'Simmakkal', description: 'Traditional market area' },
-    { id: 210, name: 'Villapuram', description: 'Suburban residential zone' }
+    { id: 210, name: 'Villapuram', description: 'Suburban residential zone' },
   ],
   3: [
     { id: 301, name: 'Thirupparankundram', description: 'Temple town with hill views' },
@@ -63,7 +41,7 @@ export const places = {
     { id: 307, name: 'S.S. Colony', description: 'Premium gated community area' },
     { id: 308, name: 'Thirunagar', description: 'Popular residential hub' },
     { id: 309, name: 'Vishwanathapuram', description: 'Growing residential zone' },
-    { id: 310, name: 'Thathaneri', description: 'Modern residential neighbourhood' }
+    { id: 310, name: 'Thathaneri', description: 'Modern residential neighbourhood' },
   ],
   4: [
     { id: 401, name: 'Melur', description: 'Major taluk headquarters' },
@@ -75,7 +53,7 @@ export const places = {
     { id: 407, name: 'Samayanallur', description: 'Suburban growth area' },
     { id: 408, name: 'Othakadai', description: 'Commercial corridor' },
     { id: 409, name: 'T. Kallupatti', description: 'Agricultural hub' },
-    { id: 410, name: 'Elumalai', description: 'Rural investment zone' }
+    { id: 410, name: 'Elumalai', description: 'Rural investment zone' },
   ],
   5: [
     { id: 501, name: 'Vadipatti', description: 'Taluk headquarters' },
@@ -87,80 +65,74 @@ export const places = {
     { id: 507, name: 'Thirumangalam', description: 'Major town center' },
     { id: 508, name: 'Peraiyur', description: 'Historic market town' },
     { id: 509, name: 'Kalligudi', description: 'Agricultural hub' },
-    { id: 510, name: 'Sedapatti', description: 'Emerging growth area' }
-  ]
+    { id: 510, name: 'Sedapatti', description: 'Emerging growth area' },
+  ],
 }
 
-// Generate 10 sample plots per place
-function generatePlots(placeId, placeName) {
-  const types = ['Residential Plot', 'Commercial Plot', 'Agricultural Land', 'Villa Plot', 'DTCP Approved Plot']
+const PLOT_IMGS = [
+  'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=500&h=350&fit=crop&q=80',
+  'https://images.unsplash.com/photo-1628624747186-a941c476b7ef?w=500&h=350&fit=crop&q=80',
+  'https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=500&h=350&fit=crop&q=80',
+  'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=500&h=350&fit=crop&q=80',
+  'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=500&h=350&fit=crop&q=80',
+]
+
+const TYPES = ['Residential Plot', 'Commercial Plot', 'Agricultural Land', 'Villa Plot', 'DTCP Approved Plot']
+const FACINGS = ['East', 'West', 'North', 'South', 'Corner']
+
+function generatePlots(placeId, placeName, divisionName) {
   const plots = []
   for (let i = 1; i <= 10; i++) {
-    const type = types[(i - 1) % types.length]
-    const area = 600 + Math.floor(Math.random() * 2400)
-    const pricePerSqft = 800 + Math.floor(Math.random() * 4200)
+    const type = TYPES[(i - 1) % TYPES.length]
+    const area = 600 + Math.floor((placeId * i * 137) % 2400)
+    const ppsf = 800 + Math.floor((placeId * i * 73) % 4200)
     plots.push({
       id: `${placeId}-${i}`,
       placeId,
-      title: `${type} in ${placeName} - Plot ${i}`,
+      divisionName,
+      title: `${type} in ${placeName} — Plot ${i}`,
       type,
       area,
-      price: area * pricePerSqft,
+      price: area * ppsf,
       address: `Plot No. ${i}, ${placeName}, Madurai`,
-      description: `Premium ${type.toLowerCase()} available in ${placeName}. Well-connected to main roads, water and electricity supply available. Clear title, ready for registration.`,
-      images: [
-        `https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=400&h=300&fit=crop&q=80`,
-        `https://images.unsplash.com/photo-1628624747186-a941c476b7ef?w=400&h=300&fit=crop&q=80`
-      ],
-      seller: 'Manai Mitra Verified',
+      description: `Premium ${type.toLowerCase()} in ${placeName}, ${divisionName}. Clear title, well-connected to main roads. Water, electricity, and drainage available. Ready for immediate registration.`,
+      images: [PLOT_IMGS[i % PLOT_IMGS.length], PLOT_IMGS[(i + 1) % PLOT_IMGS.length]],
+      facing: FACINGS[i % FACINGS.length],
+      road_size: `${18 + (i % 4) * 6} feet`,
+      dtcp_approved: i % 3 !== 0,
       status: 'approved',
-      createdAt: new Date(2026, 0, Math.floor(Math.random() * 120) + 1).toISOString()
+      seller_name: 'Manai Mitra Verified',
+      patta_number: `${placeId}/${i}/A`,
+      chitta_number: `${placeId}/${i}/B`,
     })
   }
   return plots
 }
 
-// Build full plot data map: placeId -> plots[]
 export const plotsByPlace = {}
-Object.values(places).flat().forEach(place => {
-  plotsByPlace[place.id] = generatePlots(place.id, place.name)
+Object.entries(places).forEach(([divId, placeList]) => {
+  const div = divisions.find(d => d.id === Number(divId))
+  placeList.forEach(place => {
+    plotsByPlace[place.id] = generatePlots(place.id, place.name, div?.name || '')
+  })
 })
 
-export function getDivision(id) {
-  return divisions.find(d => d.id === Number(id))
-}
-
-export function getPlaces(divisionId) {
-  return places[Number(divisionId)] || []
-}
-
-export function getPlace(placeId) {
+export const getDivision = (id) => divisions.find(d => d.id === Number(id))
+export const getPlaces = (divId) => places[Number(divId)] || []
+export const getPlace = (placeId) => {
   const pid = Number(placeId)
-  for (const list of Object.values(places)) {
-    const found = list.find(p => p.id === pid)
-    if (found) return found
-  }
+  for (const list of Object.values(places)) { const f = list.find(p => p.id === pid); if (f) return f }
   return null
 }
-
-export function getPlots(placeId) {
-  return plotsByPlace[Number(placeId)] || []
-}
-
-export function getPlot(plotId) {
-  for (const plots of Object.values(plotsByPlace)) {
-    const found = plots.find(p => p.id === plotId)
-    if (found) return found
-  }
+export const getPlots = (placeId) => plotsByPlace[Number(placeId)] || []
+export const getPlot = (plotId) => {
+  for (const plots of Object.values(plotsByPlace)) { const f = plots.find(p => p.id === plotId); if (f) return f }
   return null
 }
-
-export function getDivisionForPlace(placeId) {
+export const getDivisionForPlace = (placeId) => {
   const pid = Number(placeId)
   for (const [divId, list] of Object.entries(places)) {
-    if (list.find(p => p.id === pid)) {
-      return divisions.find(d => d.id === Number(divId))
-    }
+    if (list.find(p => p.id === pid)) return divisions.find(d => d.id === Number(divId))
   }
   return null
 }

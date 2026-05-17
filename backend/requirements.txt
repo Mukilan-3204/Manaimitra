@@ -1,6 +1,6 @@
 fastapi
 uvicorn[standard]
-supabase
+supabase==2.30.0
 python-dotenv
 python-multipart
 pydantic

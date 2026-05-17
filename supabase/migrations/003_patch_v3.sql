@@ -1,18 +1,30 @@
 -- ============================================
--- Manai Mitra — Seed Data (Safe / Idempotent)
--- Uses ON CONFLICT so it's safe to run anytime
+-- Manai Mitra — DB Patch v3
+-- Run this ONLY if DB already existed before v3
+-- Adds: dob, aadhaar_front, aadhaar_back, facing, road_size, views
+-- ============================================
+
+ALTER TABLE plots ADD COLUMN IF NOT EXISTS facing        TEXT DEFAULT 'East';
+ALTER TABLE plots ADD COLUMN IF NOT EXISTS road_size     TEXT DEFAULT '';
+ALTER TABLE plots ADD COLUMN IF NOT EXISTS dtcp_approved BOOLEAN DEFAULT FALSE;
+ALTER TABLE plots ADD COLUMN IF NOT EXISTS chitta_number TEXT;
+ALTER TABLE plots ADD COLUMN IF NOT EXISTS dob           TEXT;
+ALTER TABLE plots ADD COLUMN IF NOT EXISTS aadhaar_front TEXT;
+ALTER TABLE plots ADD COLUMN IF NOT EXISTS aadhaar_back  TEXT;
+ALTER TABLE plots ADD COLUMN IF NOT EXISTS views         INTEGER DEFAULT 0;
+
+-- ============================================
+-- Manai Mitra — Seed Data v2
+-- Run AFTER migration (if starting fresh)
 -- ============================================
 
 INSERT INTO divisions (id, name, icon, description) VALUES
   (1, 'Madurai Central', '🏛️', 'Historic temple area, bustling markets, and heritage landmarks.'),
   (2, 'Madurai North',   '🌆', 'Modern residential hubs — K.K. Nagar, Anna Nagar, well-planned colonies.'),
-  (3, 'Madurai South',   '⛰️', 'Scenic hill views — Pasumalai, Thirupparankundram, premium residential zones.'),
-  (4, 'Madurai East',    '🌿', 'Rural charm meets growth — Melur, Alanganallur, investment corridors.'),
-  (5, 'Madurai West',    '🏞️', 'Gateway to the hills — Vadipatti, Usilampatti, agricultural belt opportunities.')
-ON CONFLICT (id) DO UPDATE SET
-  name = EXCLUDED.name,
-  icon = EXCLUDED.icon,
-  description = EXCLUDED.description;
+  (3, 'Madurai South',   '⛰️', 'Scenic hill views — Pasumalai, Thirupparankundram, and premium residential zones.'),
+  (4, 'Madurai East',    '🌿', 'Rural charm meets growth — Melur, Alanganallur, and investment corridors.'),
+  (5, 'Madurai West',    '🏞️', 'Gateway to the hills — Vadipatti, Usilampatti, and agricultural belt opportunities.')
+ON CONFLICT (id) DO UPDATE SET name=EXCLUDED.name, icon=EXCLUDED.icon, description=EXCLUDED.description;
 
 INSERT INTO places (id, division_id, name, description) VALUES
   (101,1,'Meenakshi Temple Area','Heritage zone near the iconic temple'),
@@ -65,6 +77,4 @@ INSERT INTO places (id, division_id, name, description) VALUES
   (508,5,'Peraiyur','Historic market town'),
   (509,5,'Kalligudi','Agricultural hub'),
   (510,5,'Sedapatti','Emerging growth area')
-ON CONFLICT (id) DO UPDATE SET
-  name = EXCLUDED.name,
-  description = EXCLUDED.description;
+ON CONFLICT (id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description;
